@@ -1,18 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-export default function Result({ data }) {
+function Result({ data }) {
   const { isFetching, payload } = data
-
-  if (!Object.keys(payload).length) {
-    return (
-      <div>NO RESULT!</div>
-    )
-  }
 
   if (isFetching) {
     return (
       <div>LOADING...</div>
+    )
+  }
+
+  if (!Object.keys(payload).length) {
+    return (
+      <div>NO RESULT!</div>
     )
   }
 
@@ -46,3 +47,9 @@ Result.propTypes = {
     }),
   }),
 }
+
+const mapStateToprops = (state) => ({
+  data: state.spacex,
+})
+
+export default connect(mapStateToprops)(Result)
